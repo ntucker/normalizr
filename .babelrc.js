@@ -12,7 +12,7 @@ module.exports = {
         helpers: true,
         regenerator: true,
         useESModules: !cjs,
-        version: '7.5.5'
+        version: '7.6.0'
       }
     ],
     // cjs && 'transform-es2015-modules-commonjs',
