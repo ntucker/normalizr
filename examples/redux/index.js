@@ -3,7 +3,7 @@ import * as Selector from './src/redux/selectors';
 import inquirer from 'inquirer';
 import store from './src/redux';
 
-const REPO = 'paularmstrong/normalizr';
+const REPO = 'ntucker/normalizr';
 
 const start = () => {
   inquirer

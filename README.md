@@ -1,15 +1,15 @@
-# normalizr [![build status](https://img.shields.io/travis/paularmstrong/normalizr/master.svg?style=flat-square)](https://travis-ci.org/paularmstrong/normalizr) [![Coverage Status](https://img.shields.io/coveralls/paularmstrong/normalizr/master.svg?style=flat-square)](https://coveralls.io/github/paularmstrong/normalizr?branch=master) [![npm version](https://img.shields.io/npm/v/normalizr.svg?style=flat-square)](https://www.npmjs.com/package/normalizr) [![npm downloads](https://img.shields.io/npm/dm/normalizr.svg?style=flat-square)](https://www.npmjs.com/package/normalizr) [![Greenkeeper badge](https://badges.greenkeeper.io/paularmstrong/normalizr.svg)](https://greenkeeper.io/)
+# normalizr [![build status](https://img.shields.io/travis/ntucker/normalizr/master.svg?style=flat-square)](https://travis-ci.org/ntucker/normalizr) [![Coverage Status](https://img.shields.io/coveralls/ntucker/normalizr/master.svg?style=flat-square)](https://coveralls.io/github/ntucker/normalizr?branch=master) [![npm version](https://img.shields.io/npm/v/@rest-hooks/normalizr.svg?style=flat-square)](https://www.npmjs.com/package/@rest-hooks/normalizr) [![npm downloads](https://img.shields.io/npm/dm/@rest-hooks/normalizr.svg?style=flat-square)](https://www.npmjs.com/package/@rest-hooks/normalizr) [![Greenkeeper badge](https://badges.greenkeeper.io/ntucker/normalizr.svg)](https://greenkeeper.io/)
 
 ## Install
 
 Install from the NPM repository using yarn or npm:
 
 ```shell
-yarn add normalizr
+yarn add @rest-hooks/normalizr
 ```
 
 ```shell
-npm install normalizr
+npm install @rest-hooks/normalizr
 ```
 
 ## Motivation
@@ -64,7 +64,7 @@ Consider a typical blog post. The API response for a single post might look some
 We have two nested entity types within our `article`: `users` and `comments`. Using various `schema`, we can normalize all three entity types down:
 
 ```js
-import { normalize, schema } from 'normalizr';
+import { normalize, schema } from '@rest-hooks/normalizr';
 
 // Define a users schema
 const user = new schema.Entity('users');
@@ -114,4 +114,6 @@ None.
 
 ## Credits
 
-Normalizr was originally created by [Dan Abramov](http://github.com/gaearon) and inspired by a conversation with [Jing Chen](https://twitter.com/jingc). Since v3, it was completely rewritten and maintained by [Paul Armstrong](https://twitter.com/paularmstrong). It has also received much help, enthusiasm, and contributions from [community members](https://github.com/paularmstrong/normalizr/graphs/contributors).
+Normalizr was originally created by [Dan Abramov](http://github.com/gaearon) and inspired by a conversation with [Jing Chen](https://twitter.com/jingc). Since v3, it was completely rewritten and maintained by [Paul Armstrong](https://twitter.com/paularmstrong).
+Since v4, it was largely rewritten and maintained by [Nathaniel Tucker](https://twitter.com/npinp).
+It has also received much help, enthusiasm, and contributions from [community members](https://github.com/ntucker/normalizr/graphs/contributors).
