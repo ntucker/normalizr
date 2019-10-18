@@ -181,7 +181,7 @@ describe('denormalize', () => {
   });
 
   test('returns the input if undefined', () => {
-    expect(denormalize(undefined, {}, {})).toBeUndefined();
+    expect(denormalize(undefined, {}, {})).toEqual([undefined, false]);
   });
 
   test('denormalizes entities', () => {
@@ -192,7 +192,38 @@ describe('denormalize', () => {
         2: { id: 2, type: 'bar' }
       }
     };
-    expect(denormalize([1, 2], [mySchema], entities)).toMatchSnapshot();
+    expect(denormalize([1, 2], [mySchema], entities)[0]).toMatchSnapshot();
+  });
+
+  test('denormalizes without entities fills undefined', () => {
+    const mySchema = new schema.Entity('tacos');
+    expect(denormalize({ data: 1 }, { data: mySchema }, {})).toMatchSnapshot();
+    expect(denormalize(1, mySchema, {})).toEqual([undefined, false]);
+  });
+
+  test('denormalizes without entities and ignored undefined in array', () => {
+    const mySchema = new schema.Entity('tacos');
+    const entities = {
+      tacos: {
+        1: { id: 1, type: 'foo' }
+      }
+    };
+    expect(denormalize([1, 2], [mySchema], {})).toEqual([[], false]);
+    expect(denormalize({ results: [1, 2] }, { results: [mySchema] }, entities)).toMatchSnapshot();
+  });
+
+  test('denormalizes arrays with objects inside', () => {
+    const mySchema = new schema.Entity('tacos');
+    const entities = {
+      tacos: {
+        1: { id: 1, type: 'foo' }
+      }
+    };
+    expect(denormalize([{ data: 1 }, { data: 2 }], [{ data: mySchema }], {})[0]).toEqual([
+      { data: undefined },
+      { data: undefined }
+    ]);
+    expect(denormalize([{ data: 1 }, { data: 2 }], [{ data: mySchema }], entities)[0]).toMatchSnapshot();
   });
 
   test('denormalizes schema with extra members', () => {

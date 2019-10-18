@@ -63,4 +63,4 @@ export function normalize<T = any, E = { [key: string]: { [key: string]: T } }, 
   schema: Schema<T>
 ): NormalizedSchema<E, R>;
 
-export function denormalize(input: any, schema: Schema, entities: any): any;
+export function denormalize(input: any, schema: Schema, entities: any): [any, boolean];

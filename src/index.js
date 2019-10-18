@@ -61,13 +61,14 @@ export const normalize = (input, schema) => {
 const unvisitEntity = (id, schema, unvisit, getEntity, cache) => {
   const entity = getEntity(id, schema);
   if (typeof entity !== 'object' || entity === null) {
-    return entity;
+    return [entity, false];
   }
 
   if (!cache[schema.key]) {
     cache[schema.key] = {};
   }
 
+  let found = true;
   if (!cache[schema.key][id]) {
     // Ensure we don't mutate it non-immutable objects
     const entityCopy = ImmutableUtils.isImmutable(entity) ? entity : { ...entity };
@@ -75,10 +76,10 @@ const unvisitEntity = (id, schema, unvisit, getEntity, cache) => {
     // Need to set this first so that if it is referenced further within the
     // denormalization the reference will already exist.
     cache[schema.key][id] = entityCopy;
-    cache[schema.key][id] = schema.denormalize(entityCopy, unvisit);
+    [cache[schema.key][id], found] = schema.denormalize(entityCopy, unvisit);
   }
 
-  return cache[schema.key][id];
+  return [cache[schema.key][id], found];
 };
 
 const getUnvisit = (entities) => {
@@ -92,7 +93,7 @@ const getUnvisit = (entities) => {
     }
 
     if (input === undefined || input === null) {
-      return input;
+      return [input, true];
     }
 
     if (schema instanceof EntitySchema) {
@@ -103,7 +104,7 @@ const getUnvisit = (entities) => {
       return schema.denormalize(input, unvisit);
     }
 
-    return input;
+    return [input, true];
   };
 };
 
@@ -129,4 +130,5 @@ export const denormalize = (input, schema, entities) => {
   if (typeof input !== 'undefined') {
     return getUnvisit(entities)(input, schema);
   }
+  return [undefined, false];
 };

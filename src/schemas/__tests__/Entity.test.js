@@ -284,7 +284,7 @@ describe(`${schema.Entity.name} denormalization`, () => {
       }
     };
 
-    const denormalizedReport = denormalize('123', report, entities);
+    const [denormalizedReport] = denormalize('123', report, entities);
 
     expect(denormalizedReport).toBe(denormalizedReport.draftedBy.reports[0]);
     expect(denormalizedReport.publishedBy).toBe(denormalizedReport.draftedBy);
