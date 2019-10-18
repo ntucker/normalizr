@@ -29,7 +29,7 @@ export const denormalize = (schema, input, unvisit) => {
       ? input
           .map((entityOrId) => {
             const [value, foundItem] = unvisit(entityOrId, schema);
-            if (value === undefined || !foundItem) {
+            if (!foundItem) {
               found = false;
             }
             return value;
@@ -56,7 +56,7 @@ export default class ArraySchema extends PolymorphicSchema {
         ? input
             .map((entityOrId) => {
               const [value, foundItem] = this.denormalizeValue(entityOrId, unvisit);
-              if (value === undefined || !foundItem) {
+              if (!foundItem) {
                 found = false;
               }
               return value;
