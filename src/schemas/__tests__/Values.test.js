@@ -111,4 +111,45 @@ describe(`${schema.Values.name} denormalization`, () => {
       )
     ).toMatchSnapshot();
   });
+
+  test('denormalizes with missing entity should have false second value', () => {
+    const cat = new schema.Entity('cats');
+    const dog = new schema.Entity('dogs');
+    const valuesSchema = new schema.Values(
+      {
+        dogs: dog,
+        cats: cat
+      },
+      (entity, key) => entity.type
+    );
+
+    const entities = {
+      cats: { 1: { id: 1, type: 'cats' } },
+      dogs: { 1: { id: 1, type: 'dogs' } }
+    };
+
+    expect(
+      denormalize(
+        {
+          fido: { id: 1, schema: 'dogs' },
+          fluffy: { id: 1, schema: 'cats' },
+          prancy: { id: 5, schema: 'cats' }
+        },
+        valuesSchema,
+        entities
+      )
+    ).toMatchSnapshot();
+
+    expect(
+      denormalize(
+        {
+          fido: { id: 1, schema: 'dogs' },
+          fluffy: { id: 1, schema: 'cats' },
+          prancy: { id: 5, schema: 'cats' }
+        },
+        valuesSchema,
+        fromJS(entities)
+      )
+    ).toMatchSnapshot();
+  });
 });

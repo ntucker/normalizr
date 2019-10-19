@@ -80,12 +80,17 @@ export default class EntitySchema {
       return ImmutableUtils.denormalizeImmutable(this.schema, entity, unvisit);
     }
 
+    let found = true;
     Object.keys(this.schema).forEach((key) => {
       if (entity.hasOwnProperty(key)) {
         const schema = this.schema[key];
-        entity[key] = unvisit(entity[key], schema);
+        const [value, foundItem] = unvisit(entity[key], schema);
+        entity[key] = value;
+        if (!foundItem) {
+          found = false;
+        }
       }
     });
-    return entity;
+    return [entity, found];
   }
 }

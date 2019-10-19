@@ -41,7 +41,7 @@ const normalizedData = normalize(myData, mySchema);
 }
 ```
 
-## `denormalize(input, schema, entities)`
+## `denormalize(input, schema, entities): [denormalized, foundAllEntities]`
 
 Denormalizes an input based on schema and provided entities from a plain object or Immutable data. The reverse of `normalize`.
 

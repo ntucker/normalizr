@@ -20,12 +20,17 @@ export const denormalize = (schema, input, unvisit) => {
   }
 
   const object = { ...input };
+  let found = true;
   Object.keys(schema).forEach((key) => {
     if (object[key] != null) {
-      object[key] = unvisit(object[key], schema[key]);
+      const [item, foundItem] = unvisit(object[key], schema[key]);
+      object[key] = item;
+      if (!foundItem) {
+        found = false;
+      }
     }
   });
-  return object;
+  return [object, found];
 };
 
 export default class ObjectSchema {

@@ -1,5 +1,19 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`denormalize denormalizes arrays with objects inside 1`] = `
+Array [
+  Object {
+    "data": Object {
+      "id": 1,
+      "type": "foo",
+    },
+  },
+  Object {
+    "data": undefined,
+  },
+]
+`;
+
 exports[`denormalize denormalizes entities 1`] = `
 Array [
   Object {
@@ -13,71 +27,118 @@ Array [
 ]
 `;
 
-exports[`denormalize denormalizes nested entities 1`] = `
-Object {
-  "author": Object {
-    "id": "8472",
-    "name": "Paul",
-  },
-  "body": "This article is great.",
-  "comments": Array [
-    Object {
-      "comment": "I like it!",
-      "id": "comment-123-4738",
-      "user": Object {
-        "id": "10293",
-        "name": "Jane",
-      },
-    },
-  ],
-  "id": "123",
-  "title": "A Great Article",
-}
-`;
-
-exports[`denormalize denormalizes schema with extra members 1`] = `
-Object {
-  "data": Array [
+exports[`denormalize denormalizes ignoring unfound entities in arrays 1`] = `
+Array [
+  Array [
     Object {
       "id": 1,
       "type": "foo",
     },
-    Object {
-      "id": 2,
-      "type": "bar",
-    },
   ],
-  "extra": "5",
-}
+  false,
+]
+`;
+
+exports[`denormalize denormalizes ignoring unfound entities in arrays 2`] = `
+Array [
+  Object {
+    "results": Array [
+      Object {
+        "id": 1,
+        "type": "foo",
+      },
+    ],
+  },
+  false,
+]
+`;
+
+exports[`denormalize denormalizes nested entities 1`] = `
+Array [
+  Object {
+    "author": Object {
+      "id": "8472",
+      "name": "Paul",
+    },
+    "body": "This article is great.",
+    "comments": Array [
+      Object {
+        "comment": "I like it!",
+        "id": "comment-123-4738",
+        "user": Object {
+          "id": "10293",
+          "name": "Jane",
+        },
+      },
+    ],
+    "id": "123",
+    "title": "A Great Article",
+  },
+  true,
+]
+`;
+
+exports[`denormalize denormalizes schema with extra members 1`] = `
+Array [
+  Object {
+    "data": Array [
+      Object {
+        "id": 1,
+        "type": "foo",
+      },
+      Object {
+        "id": 2,
+        "type": "bar",
+      },
+    ],
+    "extra": "5",
+  },
+  true,
+]
 `;
 
 exports[`denormalize denormalizes with function as idAttribute 1`] = `
 Array [
-  Object {
-    "guest": null,
-    "id": "1",
-    "name": "Esther",
-  },
-  Object {
-    "guest": Object {
-      "guest_id": 1,
+  Array [
+    Object {
+      "guest": null,
+      "id": "1",
+      "name": "Esther",
     },
-    "id": "2",
-    "name": "Tom",
+    Object {
+      "guest": Object {
+        "guest_id": 1,
+      },
+      "id": "2",
+      "name": "Tom",
+    },
+  ],
+  true,
+]
+`;
+
+exports[`denormalize denormalizes without entities fills undefined 1`] = `
+Array [
+  Object {
+    "data": undefined,
   },
+  false,
 ]
 `;
 
 exports[`denormalize set to undefined if schema key is not in entities 1`] = `
-Object {
-  "author": undefined,
-  "comments": Array [
-    Object {
-      "user": undefined,
-    },
-  ],
-  "id": "123",
-}
+Array [
+  Object {
+    "author": undefined,
+    "comments": Array [
+      Object {
+        "user": undefined,
+      },
+    ],
+    "id": "123",
+  },
+  false,
+]
 `;
 
 exports[`normalize can use fully custom entity classes 1`] = `

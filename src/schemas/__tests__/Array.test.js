@@ -103,6 +103,22 @@ describe(`${schema.Array.name} denormalization`, () => {
       expect(denormalize([1, 2], [cats], fromJS(entities))).toMatchSnapshot();
     });
 
+    test('denormalizes with missing entity should have false second value', () => {
+      const cats = new schema.Entity('cats');
+      const entities = {
+        cats: {
+          1: { id: 1, name: 'Milo' },
+          2: { id: 2, name: 'Jake' }
+        }
+      };
+      let [value, foundEntities] = denormalize([{ data: 1 }, { data: 2 }, { data: 3 }], [{ data: cats }], entities);
+      expect(value).toMatchSnapshot();
+      expect(foundEntities).toBe(false);
+      [value, foundEntities] = denormalize([{ data: 1 }, { data: 2 }, { data: 3 }], [{ data: cats }], fromJS(entities));
+      expect(value).toMatchSnapshot();
+      expect(foundEntities).toBe(false);
+    });
+
     test('returns the input value if is not an array', () => {
       const filling = new schema.Entity('fillings');
       const taco = new schema.Entity('tacos', { fillings: [filling] });
@@ -132,6 +148,19 @@ describe(`${schema.Array.name} denormalization`, () => {
       const catList = new schema.Array(cats);
       expect(denormalize([1, 2], catList, entities)).toMatchSnapshot();
       expect(denormalize([1, 2], catList, fromJS(entities))).toMatchSnapshot();
+    });
+
+    test('denormalizes with missing entity should have false second value', () => {
+      const cats = new schema.Entity('cats');
+      const entities = {
+        cats: {
+          1: { id: 1, name: 'Milo' },
+          2: { id: 2, name: 'Jake' }
+        }
+      };
+      const catList = new schema.Array(cats);
+      expect(denormalize([1, 2, 3], catList, entities)).toMatchSnapshot();
+      expect(denormalize([1, 2, 3], catList, fromJS(entities))).toMatchSnapshot();
     });
 
     test('denormalizes multiple entities', () => {
