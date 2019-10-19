@@ -27,6 +27,32 @@ Array [
 ]
 `;
 
+exports[`denormalize denormalizes ignoring unfound entities in arrays 1`] = `
+Array [
+  Array [
+    Object {
+      "id": 1,
+      "type": "foo",
+    },
+  ],
+  false,
+]
+`;
+
+exports[`denormalize denormalizes ignoring unfound entities in arrays 2`] = `
+Array [
+  Object {
+    "results": Array [
+      Object {
+        "id": 1,
+        "type": "foo",
+      },
+    ],
+  },
+  false,
+]
+`;
+
 exports[`denormalize denormalizes nested entities 1`] = `
 Array [
   Object {
@@ -88,20 +114,6 @@ Array [
     },
   ],
   true,
-]
-`;
-
-exports[`denormalize denormalizes without entities and ignored undefined in array 1`] = `
-Array [
-  Object {
-    "results": Array [
-      Object {
-        "id": 1,
-        "type": "foo",
-      },
-    ],
-  },
-  false,
 ]
 `;
 

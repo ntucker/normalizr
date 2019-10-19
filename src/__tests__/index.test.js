@@ -201,14 +201,14 @@ describe('denormalize', () => {
     expect(denormalize(1, mySchema, {})).toEqual([undefined, false]);
   });
 
-  test('denormalizes without entities and ignored undefined in array', () => {
+  test('denormalizes ignoring unfound entities in arrays', () => {
     const mySchema = new schema.Entity('tacos');
     const entities = {
       tacos: {
         1: { id: 1, type: 'foo' }
       }
     };
-    expect(denormalize([1, 2], [mySchema], {})).toEqual([[], false]);
+    expect(denormalize([1, 2], [mySchema], entities)).toMatchSnapshot();
     expect(denormalize({ results: [1, 2] }, { results: [mySchema] }, entities)).toMatchSnapshot();
   });
 
