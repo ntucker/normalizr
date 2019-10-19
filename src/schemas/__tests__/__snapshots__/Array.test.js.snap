@@ -164,47 +164,41 @@ Array [
 
 exports[`ArraySchema denormalization Object denormalizes with missing entity should have false second value 1`] = `
 Array [
-  Array [
-    Object {
-      "data": Object {
-        "id": 1,
-        "name": "Milo",
-      },
+  Object {
+    "data": Object {
+      "id": 1,
+      "name": "Milo",
     },
-    Object {
-      "data": Object {
-        "id": 2,
-        "name": "Jake",
-      },
+  },
+  Object {
+    "data": Object {
+      "id": 2,
+      "name": "Jake",
     },
-    Object {
-      "data": undefined,
-    },
-  ],
-  false,
+  },
+  Object {
+    "data": undefined,
+  },
 ]
 `;
 
 exports[`ArraySchema denormalization Object denormalizes with missing entity should have false second value 2`] = `
 Array [
-  Array [
-    Object {
-      "data": Immutable.Map {
-        "id": 1,
-        "name": "Milo",
-      },
+  Object {
+    "data": Immutable.Map {
+      "id": 1,
+      "name": "Milo",
     },
-    Object {
-      "data": Immutable.Map {
-        "id": 2,
-        "name": "Jake",
-      },
+  },
+  Object {
+    "data": Immutable.Map {
+      "id": 2,
+      "name": "Jake",
     },
-    Object {
-      "data": undefined,
-    },
-  ],
-  false,
+  },
+  Object {
+    "data": undefined,
+  },
 ]
 `;
 

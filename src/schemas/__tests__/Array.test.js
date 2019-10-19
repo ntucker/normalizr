@@ -111,10 +111,12 @@ describe(`${schema.Array.name} denormalization`, () => {
           2: { id: 2, name: 'Jake' }
         }
       };
-      expect(denormalize([{ data: 1 }, { data: 2 }, { data: 3 }], [{ data: cats }], entities)).toMatchSnapshot();
-      expect(
-        denormalize([{ data: 1 }, { data: 2 }, { data: 3 }], [{ data: cats }], fromJS(entities))
-      ).toMatchSnapshot();
+      let [value, foundEntities] = denormalize([{ data: 1 }, { data: 2 }, { data: 3 }], [{ data: cats }], entities);
+      expect(value).toMatchSnapshot();
+      expect(foundEntities).toBe(false);
+      [value, foundEntities] = denormalize([{ data: 1 }, { data: 2 }, { data: 3 }], [{ data: cats }], fromJS(entities));
+      expect(value).toMatchSnapshot();
+      expect(foundEntities).toBe(false);
     });
 
     test('returns the input value if is not an array', () => {
