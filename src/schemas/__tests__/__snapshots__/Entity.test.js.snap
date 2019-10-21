@@ -73,7 +73,7 @@ Array [
   Object {
     "id": 2,
   },
-  true,
+  false,
 ]
 `;
 
@@ -82,7 +82,7 @@ Array [
   Immutable.Map {
     "id": 2,
   },
-  true,
+  false,
 ]
 `;
 

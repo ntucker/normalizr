@@ -39,6 +39,22 @@ describe(`${schema.Object.name} denormalization`, () => {
     expect(denormalize(fromJS({ user: 1 }), object, fromJS(entities))).toMatchSnapshot();
   });
 
+  test('denormalizes an object with plain members', () => {
+    const userSchema = new schema.Entity('user');
+    const object = new schema.Object({
+      user: userSchema,
+      plain: ''
+    });
+    const entities = {
+      user: {
+        1: { id: 1, name: 'Nacho' }
+      }
+    };
+    expect(denormalize({ user: 1 }, object, entities)).toMatchSnapshot();
+    expect(denormalize({ user: 1 }, object, fromJS(entities))).toMatchSnapshot();
+    expect(denormalize(fromJS({ user: 1 }), object, fromJS(entities))).toMatchSnapshot();
+  });
+
   test('denormalizes plain object shorthand', () => {
     const userSchema = new schema.Entity('user');
     const entities = {
@@ -49,6 +65,12 @@ describe(`${schema.Object.name} denormalization`, () => {
     expect(denormalize({ user: 1 }, { user: userSchema, tacos: {} }, entities)).toMatchSnapshot();
     expect(denormalize({ user: 1 }, { user: userSchema, tacos: {} }, fromJS(entities))).toMatchSnapshot();
     expect(denormalize(fromJS({ user: 1 }), { user: userSchema, tacos: {} }, fromJS(entities))).toMatchSnapshot();
+
+    expect(denormalize({ user: 1, tacos: {} }, { user: userSchema, tacos: {} }, entities)).toMatchSnapshot();
+    expect(denormalize({ user: 1, tacos: {} }, { user: userSchema, tacos: {} }, fromJS(entities))).toMatchSnapshot();
+    expect(
+      denormalize(fromJS({ user: 1, tacos: {} }), { user: userSchema, tacos: {} }, fromJS(entities))
+    ).toMatchSnapshot();
   });
 
   test('denormalizes an object that contains a property representing a an object with an id of zero', () => {

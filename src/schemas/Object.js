@@ -28,6 +28,11 @@ export const denormalize = (schema, input, unvisit) => {
       if (!foundItem) {
         found = false;
       }
+    } else {
+      const [, foundItem] = unvisit(undefined, schema[key]);
+      if (!foundItem) {
+        found = false;
+      }
     }
   });
   return [object, found];

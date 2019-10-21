@@ -92,11 +92,11 @@ const getUnvisit = (entities) => {
       return method(schema, input, unvisit);
     }
 
-    if (input === undefined || input === null) {
-      return [input, true];
-    }
-
     if (schema instanceof EntitySchema) {
+      if (input === undefined || input === null) {
+        // null is intentionally not there; whereas undefined means the entity isn't available
+        return [input, input === null];
+      }
       return unvisitEntity(input, schema, unvisit, getEntity, cache);
     }
 

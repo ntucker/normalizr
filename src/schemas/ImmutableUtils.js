@@ -43,6 +43,10 @@ export function denormalizeImmutable(schema, input, unvisit) {
         }
         return object.set(stringKey, item);
       } else {
+        const [, foundItem] = unvisit(undefined, schema[stringKey]);
+        if (!foundItem) {
+          found = false;
+        }
         return object;
       }
     }, input),

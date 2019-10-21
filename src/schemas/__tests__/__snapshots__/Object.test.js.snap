@@ -72,6 +72,42 @@ Array [
 ]
 `;
 
+exports[`ObjectSchema denormalization denormalizes an object with plain members 1`] = `
+Array [
+  Object {
+    "user": Object {
+      "id": 1,
+      "name": "Nacho",
+    },
+  },
+  true,
+]
+`;
+
+exports[`ObjectSchema denormalization denormalizes an object with plain members 2`] = `
+Array [
+  Object {
+    "user": Immutable.Map {
+      "id": 1,
+      "name": "Nacho",
+    },
+  },
+  true,
+]
+`;
+
+exports[`ObjectSchema denormalization denormalizes an object with plain members 3`] = `
+Array [
+  Immutable.Map {
+    "user": Immutable.Map {
+      "id": 1,
+      "name": "Nacho",
+    },
+  },
+  true,
+]
+`;
+
 exports[`ObjectSchema denormalization denormalizes plain object shorthand 1`] = `
 Array [
   Object {
@@ -103,6 +139,45 @@ Array [
       "id": 1,
       "name": "Jane",
     },
+  },
+  true,
+]
+`;
+
+exports[`ObjectSchema denormalization denormalizes plain object shorthand 4`] = `
+Array [
+  Object {
+    "tacos": Object {},
+    "user": Object {
+      "id": 1,
+      "name": "Jane",
+    },
+  },
+  true,
+]
+`;
+
+exports[`ObjectSchema denormalization denormalizes plain object shorthand 5`] = `
+Array [
+  Object {
+    "tacos": Object {},
+    "user": Immutable.Map {
+      "id": 1,
+      "name": "Jane",
+    },
+  },
+  true,
+]
+`;
+
+exports[`ObjectSchema denormalization denormalizes plain object shorthand 6`] = `
+Array [
+  Immutable.Map {
+    "user": Immutable.Map {
+      "id": 1,
+      "name": "Jane",
+    },
+    "tacos": Immutable.Map {},
   },
   true,
 ]
