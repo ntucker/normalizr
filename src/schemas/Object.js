@@ -22,12 +22,12 @@ export const denormalize = (schema, input, unvisit) => {
   const object = { ...input };
   let found = true;
   Object.keys(schema).forEach((key) => {
+    const [item, foundItem] = unvisit(object[key], schema[key]);
     if (object[key] != null) {
-      const [item, foundItem] = unvisit(object[key], schema[key]);
       object[key] = item;
-      if (!foundItem) {
-        found = false;
-      }
+    }
+    if (!foundItem) {
+      found = false;
     }
   });
   return [object, found];

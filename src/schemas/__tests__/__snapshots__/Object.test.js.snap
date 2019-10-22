@@ -72,6 +72,42 @@ Array [
 ]
 `;
 
+exports[`ObjectSchema denormalization denormalizes an object with plain members 1`] = `
+Array [
+  Object {
+    "user": Object {
+      "id": 1,
+      "name": "Nacho",
+    },
+  },
+  true,
+]
+`;
+
+exports[`ObjectSchema denormalization denormalizes an object with plain members 2`] = `
+Array [
+  Object {
+    "user": Immutable.Map {
+      "id": 1,
+      "name": "Nacho",
+    },
+  },
+  true,
+]
+`;
+
+exports[`ObjectSchema denormalization denormalizes an object with plain members 3`] = `
+Array [
+  Immutable.Map {
+    "user": Immutable.Map {
+      "id": 1,
+      "name": "Nacho",
+    },
+  },
+  true,
+]
+`;
+
 exports[`ObjectSchema denormalization denormalizes plain object shorthand 1`] = `
 Array [
   Object {
@@ -106,6 +142,63 @@ Array [
   },
   true,
 ]
+`;
+
+exports[`ObjectSchema denormalization denormalizes plain object shorthand 4`] = `
+Array [
+  Object {
+    "tacos": Object {},
+    "user": Object {
+      "id": 1,
+      "name": "Jane",
+    },
+  },
+  true,
+]
+`;
+
+exports[`ObjectSchema denormalization denormalizes plain object shorthand 5`] = `
+Array [
+  Object {
+    "tacos": Object {},
+    "user": Immutable.Map {
+      "id": 1,
+      "name": "Jane",
+    },
+  },
+  true,
+]
+`;
+
+exports[`ObjectSchema denormalization denormalizes plain object shorthand 6`] = `
+Array [
+  Immutable.Map {
+    "user": Immutable.Map {
+      "id": 1,
+      "name": "Jane",
+    },
+    "tacos": Immutable.Map {},
+  },
+  true,
+]
+`;
+
+exports[`ObjectSchema denormalization should have found = true with null member even when schema has nested entity 1`] = `
+Object {
+  "item": null,
+}
+`;
+
+exports[`ObjectSchema denormalization should have found = true with null member even when schema has nested entity 2`] = `
+Object {
+  "item": null,
+}
+`;
+
+exports[`ObjectSchema denormalization should have found = true with null member even when schema has nested entity 3`] = `
+Immutable.Map {
+  "item": null,
+}
 `;
 
 exports[`ObjectSchema normalization filters out undefined and null values 1`] = `

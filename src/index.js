@@ -92,11 +92,16 @@ const getUnvisit = (entities) => {
       return method(schema, input, unvisit);
     }
 
-    if (input === undefined || input === null) {
+    // null is considered intentional, thus always 'found' as true
+    if (input === null) {
       return [input, true];
     }
 
     if (schema instanceof EntitySchema) {
+      // unvisitEntity just can't handle undefined
+      if (input === undefined) {
+        return [input, false];
+      }
       return unvisitEntity(input, schema, unvisit, getEntity, cache);
     }
 

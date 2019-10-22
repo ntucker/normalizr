@@ -103,6 +103,95 @@ describe(`${schema.Array.name} denormalization`, () => {
       expect(denormalize([1, 2], [cats], fromJS(entities))).toMatchSnapshot();
     });
 
+    test('denormalizes plain arrays with nothing inside', () => {
+      const userSchema = new schema.Entity('user');
+      const entities = {
+        user: {
+          1: { id: 1, name: 'Jane' }
+        }
+      };
+      expect(denormalize({ user: 1 }, { user: userSchema, tacos: [] }, entities)).toMatchSnapshot();
+      expect(denormalize({ user: 1 }, { user: userSchema, tacos: [] }, fromJS(entities))).toMatchSnapshot();
+      expect(denormalize(fromJS({ user: 1 }), { user: userSchema, tacos: [] }, fromJS(entities))).toMatchSnapshot();
+
+      expect(denormalize({ user: 1, tacos: [] }, { user: userSchema, tacos: [] }, entities)).toMatchSnapshot();
+      expect(denormalize({ user: 1, tacos: [] }, { user: userSchema, tacos: [] }, fromJS(entities))).toMatchSnapshot();
+      expect(
+        denormalize(fromJS({ user: 1, tacos: [] }), { user: userSchema, tacos: [] }, fromJS(entities))
+      ).toMatchSnapshot();
+    });
+
+    test('denormalizes plain arrays with plain object inside', () => {
+      const userSchema = new schema.Entity('user');
+      const entities = {
+        user: {
+          1: { id: 1, name: 'Jane' }
+        }
+      };
+      expect(denormalize({ user: 1 }, { user: userSchema, tacos: [{ next: '' }] }, entities)).toMatchSnapshot();
+      expect(denormalize({ user: 1 }, { user: userSchema, tacos: [{ next: '' }] }, fromJS(entities))).toMatchSnapshot();
+      expect(
+        denormalize(fromJS({ user: 1 }), { user: userSchema, tacos: [{ next: '' }] }, fromJS(entities))
+      ).toMatchSnapshot();
+
+      expect(
+        denormalize({ user: 1, tacos: [] }, { user: userSchema, tacos: [{ next: '' }] }, entities)
+      ).toMatchSnapshot();
+      expect(
+        denormalize({ user: 1, tacos: [] }, { user: userSchema, tacos: [{ next: '' }] }, fromJS(entities))
+      ).toMatchSnapshot();
+      expect(
+        denormalize(fromJS({ user: 1, tacos: [] }), { user: userSchema, tacos: [{ next: '' }] }, fromJS(entities))
+      ).toMatchSnapshot();
+    });
+
+    test('denormalizes nested in object', () => {
+      const cats = new schema.Entity('cats');
+      const catSchema = { results: [cats] };
+      const entities = {
+        cats: {
+          1: { id: 1, name: 'Milo' },
+          2: { id: 2, name: 'Jake' }
+        }
+      };
+      expect(denormalize({ results: [1, 2] }, catSchema, entities)).toMatchSnapshot();
+      expect(denormalize({ results: [1, 2] }, catSchema, fromJS(entities))).toMatchSnapshot();
+    });
+
+    test('denormalizes nested in object with primitive', () => {
+      const cats = new schema.Entity('cats');
+      const catSchema = { results: [cats], nextPage: '' };
+      const entities = {
+        cats: {
+          1: { id: 1, name: 'Milo' },
+          2: { id: 2, name: 'Jake' }
+        }
+      };
+      let [value, found] = denormalize({ results: [1, 2] }, catSchema, entities);
+      expect(value).toMatchSnapshot();
+      expect(found).toBe(true);
+      [value, found] = denormalize({ results: [1, 2] }, catSchema, fromJS(entities));
+      expect(value).toMatchSnapshot();
+      expect(found).toBe(true);
+    });
+
+    test('denormalizes should not be found when result array is undefined', () => {
+      const cats = new schema.Entity('cats');
+      const catSchema = { results: [cats] };
+      const entities = {
+        cats: {
+          1: { id: 1, name: 'Milo' },
+          2: { id: 2, name: 'Jake' }
+        }
+      };
+      let [value, found] = denormalize({ results: undefined }, catSchema, entities);
+      expect(value).toMatchSnapshot();
+      expect(found).toBe(false);
+      [value, found] = denormalize({ results: undefined }, catSchema, fromJS(entities));
+      expect(value).toMatchSnapshot();
+      expect(found).toBe(false);
+    });
+
     test('denormalizes with missing entity should have false second value', () => {
       const cats = new schema.Entity('cats');
       const entities = {
@@ -148,6 +237,115 @@ describe(`${schema.Array.name} denormalization`, () => {
       const catList = new schema.Array(cats);
       expect(denormalize([1, 2], catList, entities)).toMatchSnapshot();
       expect(denormalize([1, 2], catList, fromJS(entities))).toMatchSnapshot();
+    });
+
+    test('denormalizes plain arrays with nothing inside', () => {
+      const userSchema = new schema.Entity('user');
+      const entities = {
+        user: {
+          1: { id: 1, name: 'Jane' }
+        }
+      };
+      expect(denormalize({ user: 1 }, { user: userSchema, tacos: new schema.Array() }, entities)).toMatchSnapshot();
+      expect(
+        denormalize({ user: 1 }, { user: userSchema, tacos: new schema.Array() }, fromJS(entities))
+      ).toMatchSnapshot();
+      expect(
+        denormalize(fromJS({ user: 1 }), { user: userSchema, tacos: new schema.Array() }, fromJS(entities))
+      ).toMatchSnapshot();
+
+      expect(
+        denormalize({ user: 1, tacos: [] }, { user: userSchema, tacos: new schema.Array() }, entities)
+      ).toMatchSnapshot();
+      expect(
+        denormalize({ user: 1, tacos: [] }, { user: userSchema, tacos: new schema.Array() }, fromJS(entities))
+      ).toMatchSnapshot();
+      expect(
+        denormalize(fromJS({ user: 1, tacos: [] }), { user: userSchema, tacos: new schema.Array() }, fromJS(entities))
+      ).toMatchSnapshot();
+    });
+
+    test('denormalizes plain arrays with plain object inside', () => {
+      const userSchema = new schema.Entity('user');
+      const entities = {
+        user: {
+          1: { id: 1, name: 'Jane' }
+        }
+      };
+      expect(
+        denormalize({ user: 1 }, { user: userSchema, tacos: new schema.Array({ next: '' }) }, entities)
+      ).toMatchSnapshot();
+      expect(
+        denormalize({ user: 1 }, { user: userSchema, tacos: new schema.Array({ next: '' }) }, fromJS(entities))
+      ).toMatchSnapshot();
+      expect(
+        denormalize(fromJS({ user: 1 }), { user: userSchema, tacos: new schema.Array({ next: '' }) }, fromJS(entities))
+      ).toMatchSnapshot();
+
+      expect(
+        denormalize({ user: 1, tacos: [] }, { user: userSchema, tacos: new schema.Array({ next: '' }) }, entities)
+      ).toMatchSnapshot();
+      expect(
+        denormalize(
+          { user: 1, tacos: [] },
+          { user: userSchema, tacos: new schema.Array({ next: '' }) },
+          fromJS(entities)
+        )
+      ).toMatchSnapshot();
+      expect(
+        denormalize(
+          fromJS({ user: 1, tacos: [] }),
+          { user: userSchema, tacos: new schema.Array({ next: '' }) },
+          fromJS(entities)
+        )
+      ).toMatchSnapshot();
+    });
+
+    test('denormalizes nested in object', () => {
+      const cats = new schema.Entity('cats');
+      const catSchema = { results: new schema.Array(cats) };
+      const entities = {
+        cats: {
+          1: { id: 1, name: 'Milo' },
+          2: { id: 2, name: 'Jake' }
+        }
+      };
+      expect(denormalize({ results: [1, 2] }, catSchema, entities)).toMatchSnapshot();
+      expect(denormalize({ results: [1, 2] }, catSchema, fromJS(entities))).toMatchSnapshot();
+    });
+
+    test('denormalizes nested in object with primitive', () => {
+      const cats = new schema.Entity('cats');
+      const catSchema = { results: new schema.Array(cats), nextPage: '' };
+      const entities = {
+        cats: {
+          1: { id: 1, name: 'Milo' },
+          2: { id: 2, name: 'Jake' }
+        }
+      };
+      let [value, found] = denormalize({ results: [1, 2] }, catSchema, entities);
+      expect(value).toMatchSnapshot();
+      expect(found).toBe(true);
+      [value, found] = denormalize({ results: [1, 2] }, catSchema, fromJS(entities));
+      expect(value).toMatchSnapshot();
+      expect(found).toBe(true);
+    });
+
+    test('denormalizes should not be found when result array is undefined', () => {
+      const cats = new schema.Entity('cats');
+      const catSchema = { results: new schema.Array(cats) };
+      const entities = {
+        cats: {
+          1: { id: 1, name: 'Milo' },
+          2: { id: 2, name: 'Jake' }
+        }
+      };
+      let [value, found] = denormalize({ results: undefined }, catSchema, entities);
+      expect(value).toMatchSnapshot();
+      expect(found).toBe(false);
+      [value, found] = denormalize({ results: undefined }, catSchema, fromJS(entities));
+      expect(value).toMatchSnapshot();
+      expect(found).toBe(false);
     });
 
     test('denormalizes with missing entity should have false second value', () => {
