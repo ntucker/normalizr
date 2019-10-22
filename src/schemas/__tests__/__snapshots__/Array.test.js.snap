@@ -78,6 +78,234 @@ Array [
 ]
 `;
 
+exports[`ArraySchema denormalization Class denormalizes nested in object 1`] = `
+Array [
+  Object {
+    "results": Array [
+      Object {
+        "id": 1,
+        "name": "Milo",
+      },
+      Object {
+        "id": 2,
+        "name": "Jake",
+      },
+    ],
+  },
+  true,
+]
+`;
+
+exports[`ArraySchema denormalization Class denormalizes nested in object 2`] = `
+Array [
+  Object {
+    "results": Array [
+      Immutable.Map {
+        "id": 1,
+        "name": "Milo",
+      },
+      Immutable.Map {
+        "id": 2,
+        "name": "Jake",
+      },
+    ],
+  },
+  true,
+]
+`;
+
+exports[`ArraySchema denormalization Class denormalizes nested in object with primitive 1`] = `
+Object {
+  "results": Array [
+    Object {
+      "id": 1,
+      "name": "Milo",
+    },
+    Object {
+      "id": 2,
+      "name": "Jake",
+    },
+  ],
+}
+`;
+
+exports[`ArraySchema denormalization Class denormalizes nested in object with primitive 2`] = `
+Object {
+  "results": Array [
+    Immutable.Map {
+      "id": 1,
+      "name": "Milo",
+    },
+    Immutable.Map {
+      "id": 2,
+      "name": "Jake",
+    },
+  ],
+}
+`;
+
+exports[`ArraySchema denormalization Class denormalizes plain arrays with nothing inside 1`] = `
+Array [
+  Object {
+    "user": Object {
+      "id": 1,
+      "name": "Jane",
+    },
+  },
+  true,
+]
+`;
+
+exports[`ArraySchema denormalization Class denormalizes plain arrays with nothing inside 2`] = `
+Array [
+  Object {
+    "user": Immutable.Map {
+      "id": 1,
+      "name": "Jane",
+    },
+  },
+  true,
+]
+`;
+
+exports[`ArraySchema denormalization Class denormalizes plain arrays with nothing inside 3`] = `
+Array [
+  Immutable.Map {
+    "user": Immutable.Map {
+      "id": 1,
+      "name": "Jane",
+    },
+  },
+  true,
+]
+`;
+
+exports[`ArraySchema denormalization Class denormalizes plain arrays with nothing inside 4`] = `
+Array [
+  Object {
+    "tacos": Array [],
+    "user": Object {
+      "id": 1,
+      "name": "Jane",
+    },
+  },
+  true,
+]
+`;
+
+exports[`ArraySchema denormalization Class denormalizes plain arrays with nothing inside 5`] = `
+Array [
+  Object {
+    "tacos": Array [],
+    "user": Immutable.Map {
+      "id": 1,
+      "name": "Jane",
+    },
+  },
+  true,
+]
+`;
+
+exports[`ArraySchema denormalization Class denormalizes plain arrays with nothing inside 6`] = `
+Array [
+  Immutable.Map {
+    "user": Immutable.Map {
+      "id": 1,
+      "name": "Jane",
+    },
+    "tacos": Immutable.List [],
+  },
+  true,
+]
+`;
+
+exports[`ArraySchema denormalization Class denormalizes plain arrays with plain inside 1`] = `
+Array [
+  Object {
+    "user": Object {
+      "id": 1,
+      "name": "Jane",
+    },
+  },
+  true,
+]
+`;
+
+exports[`ArraySchema denormalization Class denormalizes plain arrays with plain inside 2`] = `
+Array [
+  Object {
+    "user": Immutable.Map {
+      "id": 1,
+      "name": "Jane",
+    },
+  },
+  true,
+]
+`;
+
+exports[`ArraySchema denormalization Class denormalizes plain arrays with plain inside 3`] = `
+Array [
+  Immutable.Map {
+    "user": Immutable.Map {
+      "id": 1,
+      "name": "Jane",
+    },
+  },
+  true,
+]
+`;
+
+exports[`ArraySchema denormalization Class denormalizes plain arrays with plain inside 4`] = `
+Array [
+  Object {
+    "tacos": Array [],
+    "user": Object {
+      "id": 1,
+      "name": "Jane",
+    },
+  },
+  true,
+]
+`;
+
+exports[`ArraySchema denormalization Class denormalizes plain arrays with plain inside 5`] = `
+Array [
+  Object {
+    "tacos": Array [],
+    "user": Immutable.Map {
+      "id": 1,
+      "name": "Jane",
+    },
+  },
+  true,
+]
+`;
+
+exports[`ArraySchema denormalization Class denormalizes plain arrays with plain inside 6`] = `
+Array [
+  Immutable.Map {
+    "user": Immutable.Map {
+      "id": 1,
+      "name": "Jane",
+    },
+    "tacos": Immutable.List [],
+  },
+  true,
+]
+`;
+
+exports[`ArraySchema denormalization Class denormalizes should not be found when result array is undefined 1`] = `
+Object {
+  "results": undefined,
+}
+`;
+
+exports[`ArraySchema denormalization Class denormalizes should not be found when result array is undefined 2`] = `
+Object {
+  "results": undefined,
+}
+`;
+
 exports[`ArraySchema denormalization Class denormalizes with missing entity should have false second value 1`] = `
 Array [
   Array [
@@ -226,6 +454,156 @@ Object {
     },
   ],
 }
+`;
+
+exports[`ArraySchema denormalization Object denormalizes plain arrays with nothing inside 1`] = `
+Array [
+  Object {
+    "user": Object {
+      "id": 1,
+      "name": "Jane",
+    },
+  },
+  true,
+]
+`;
+
+exports[`ArraySchema denormalization Object denormalizes plain arrays with nothing inside 2`] = `
+Array [
+  Object {
+    "user": Immutable.Map {
+      "id": 1,
+      "name": "Jane",
+    },
+  },
+  true,
+]
+`;
+
+exports[`ArraySchema denormalization Object denormalizes plain arrays with nothing inside 3`] = `
+Array [
+  Immutable.Map {
+    "user": Immutable.Map {
+      "id": 1,
+      "name": "Jane",
+    },
+  },
+  true,
+]
+`;
+
+exports[`ArraySchema denormalization Object denormalizes plain arrays with nothing inside 4`] = `
+Array [
+  Object {
+    "tacos": Array [],
+    "user": Object {
+      "id": 1,
+      "name": "Jane",
+    },
+  },
+  true,
+]
+`;
+
+exports[`ArraySchema denormalization Object denormalizes plain arrays with nothing inside 5`] = `
+Array [
+  Object {
+    "tacos": Array [],
+    "user": Immutable.Map {
+      "id": 1,
+      "name": "Jane",
+    },
+  },
+  true,
+]
+`;
+
+exports[`ArraySchema denormalization Object denormalizes plain arrays with nothing inside 6`] = `
+Array [
+  Immutable.Map {
+    "user": Immutable.Map {
+      "id": 1,
+      "name": "Jane",
+    },
+    "tacos": Immutable.List [],
+  },
+  true,
+]
+`;
+
+exports[`ArraySchema denormalization Object denormalizes plain arrays with plain inside 1`] = `
+Array [
+  Object {
+    "user": Object {
+      "id": 1,
+      "name": "Jane",
+    },
+  },
+  true,
+]
+`;
+
+exports[`ArraySchema denormalization Object denormalizes plain arrays with plain inside 2`] = `
+Array [
+  Object {
+    "user": Immutable.Map {
+      "id": 1,
+      "name": "Jane",
+    },
+  },
+  true,
+]
+`;
+
+exports[`ArraySchema denormalization Object denormalizes plain arrays with plain inside 3`] = `
+Array [
+  Immutable.Map {
+    "user": Immutable.Map {
+      "id": 1,
+      "name": "Jane",
+    },
+  },
+  true,
+]
+`;
+
+exports[`ArraySchema denormalization Object denormalizes plain arrays with plain inside 4`] = `
+Array [
+  Object {
+    "tacos": Array [],
+    "user": Object {
+      "id": 1,
+      "name": "Jane",
+    },
+  },
+  true,
+]
+`;
+
+exports[`ArraySchema denormalization Object denormalizes plain arrays with plain inside 5`] = `
+Array [
+  Object {
+    "tacos": Array [],
+    "user": Immutable.Map {
+      "id": 1,
+      "name": "Jane",
+    },
+  },
+  true,
+]
+`;
+
+exports[`ArraySchema denormalization Object denormalizes plain arrays with plain inside 6`] = `
+Array [
+  Immutable.Map {
+    "user": Immutable.Map {
+      "id": 1,
+      "name": "Jane",
+    },
+    "tacos": Immutable.List [],
+  },
+  true,
+]
 `;
 
 exports[`ArraySchema denormalization Object denormalizes should not be found when result array is undefined 1`] = `
@@ -571,156 +949,6 @@ Array [
     ],
     null,
   ],
-]
-`;
-
-exports[`ArraySchema normalization Object denormalizes plain arrays with nothing inside 1`] = `
-Array [
-  Object {
-    "user": Object {
-      "id": 1,
-      "name": "Jane",
-    },
-  },
-  true,
-]
-`;
-
-exports[`ArraySchema normalization Object denormalizes plain arrays with nothing inside 2`] = `
-Array [
-  Object {
-    "user": Immutable.Map {
-      "id": 1,
-      "name": "Jane",
-    },
-  },
-  true,
-]
-`;
-
-exports[`ArraySchema normalization Object denormalizes plain arrays with nothing inside 3`] = `
-Array [
-  Immutable.Map {
-    "user": Immutable.Map {
-      "id": 1,
-      "name": "Jane",
-    },
-  },
-  true,
-]
-`;
-
-exports[`ArraySchema normalization Object denormalizes plain arrays with nothing inside 4`] = `
-Array [
-  Object {
-    "tacos": Array [],
-    "user": Object {
-      "id": 1,
-      "name": "Jane",
-    },
-  },
-  true,
-]
-`;
-
-exports[`ArraySchema normalization Object denormalizes plain arrays with nothing inside 5`] = `
-Array [
-  Object {
-    "tacos": Array [],
-    "user": Immutable.Map {
-      "id": 1,
-      "name": "Jane",
-    },
-  },
-  true,
-]
-`;
-
-exports[`ArraySchema normalization Object denormalizes plain arrays with nothing inside 6`] = `
-Array [
-  Immutable.Map {
-    "user": Immutable.Map {
-      "id": 1,
-      "name": "Jane",
-    },
-    "tacos": Immutable.List [],
-  },
-  true,
-]
-`;
-
-exports[`ArraySchema normalization Object denormalizes plain arrays with plain inside 1`] = `
-Array [
-  Object {
-    "user": Object {
-      "id": 1,
-      "name": "Jane",
-    },
-  },
-  true,
-]
-`;
-
-exports[`ArraySchema normalization Object denormalizes plain arrays with plain inside 2`] = `
-Array [
-  Object {
-    "user": Immutable.Map {
-      "id": 1,
-      "name": "Jane",
-    },
-  },
-  true,
-]
-`;
-
-exports[`ArraySchema normalization Object denormalizes plain arrays with plain inside 3`] = `
-Array [
-  Immutable.Map {
-    "user": Immutable.Map {
-      "id": 1,
-      "name": "Jane",
-    },
-  },
-  true,
-]
-`;
-
-exports[`ArraySchema normalization Object denormalizes plain arrays with plain inside 4`] = `
-Array [
-  Object {
-    "tacos": Array [],
-    "user": Object {
-      "id": 1,
-      "name": "Jane",
-    },
-  },
-  true,
-]
-`;
-
-exports[`ArraySchema normalization Object denormalizes plain arrays with plain inside 5`] = `
-Array [
-  Object {
-    "tacos": Array [],
-    "user": Immutable.Map {
-      "id": 1,
-      "name": "Jane",
-    },
-  },
-  true,
-]
-`;
-
-exports[`ArraySchema normalization Object denormalizes plain arrays with plain inside 6`] = `
-Array [
-  Immutable.Map {
-    "user": Immutable.Map {
-      "id": 1,
-      "name": "Jane",
-    },
-    "tacos": Immutable.List [],
-  },
-  true,
 ]
 `;
 

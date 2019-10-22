@@ -58,7 +58,7 @@ export default class ArraySchema extends PolymorphicSchema {
   denormalize(input, unvisit) {
     let found = true;
     if (input === undefined && this.schema) {
-      const [, foundItem] = this.denormalizeValue(undefined, unvisit);
+      const [, foundItem] = unvisit(undefined, this.schema);
       if (!foundItem) {
         found = false;
       }
