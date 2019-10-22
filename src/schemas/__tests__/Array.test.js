@@ -192,7 +192,7 @@ describe(`${schema.Array.name} denormalization`, () => {
       expect(found).toBe(false);
     });
 
-    test('denormalizes with missing entity should have false second value', () => {
+    test('denormalizes with missing entity should have true second value', () => {
       const cats = new schema.Entity('cats');
       const entities = {
         cats: {
@@ -202,10 +202,10 @@ describe(`${schema.Array.name} denormalization`, () => {
       };
       let [value, foundEntities] = denormalize([{ data: 1 }, { data: 2 }, { data: 3 }], [{ data: cats }], entities);
       expect(value).toMatchSnapshot();
-      expect(foundEntities).toBe(false);
+      expect(foundEntities).toBe(true);
       [value, foundEntities] = denormalize([{ data: 1 }, { data: 2 }, { data: 3 }], [{ data: cats }], fromJS(entities));
       expect(value).toMatchSnapshot();
-      expect(foundEntities).toBe(false);
+      expect(foundEntities).toBe(true);
     });
 
     test('returns the input value if is not an array', () => {
@@ -348,7 +348,7 @@ describe(`${schema.Array.name} denormalization`, () => {
       expect(found).toBe(false);
     });
 
-    test('denormalizes with missing entity should have false second value', () => {
+    test('denormalizes with missing entity should have true second value', () => {
       const cats = new schema.Entity('cats');
       const entities = {
         cats: {
