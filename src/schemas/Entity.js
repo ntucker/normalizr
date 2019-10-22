@@ -83,17 +83,12 @@ export default class EntitySchema {
     let found = true;
     Object.keys(this.schema).forEach((key) => {
       const schema = this.schema[key];
+      const [value, foundItem] = unvisit(entity[key], schema);
+      if (!foundItem) {
+        found = false;
+      }
       if (entity.hasOwnProperty(key)) {
-        const [value, foundItem] = unvisit(entity[key], schema);
         entity[key] = value;
-        if (!foundItem) {
-          found = false;
-        }
-      } else {
-        const [, foundItem] = unvisit(undefined, schema);
-        if (!foundItem) {
-          found = false;
-        }
       }
     });
     return [entity, found];

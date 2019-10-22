@@ -36,17 +36,13 @@ export function denormalizeImmutable(schema, input, unvisit) {
       // we're accessing them using string keys.
       const stringKey = `${key}`;
 
+      const [item, foundItem] = unvisit(object.get(stringKey), schema[stringKey]);
+      if (!foundItem) {
+        found = false;
+      }
       if (object.has(stringKey)) {
-        const [item, foundItem] = unvisit(object.get(stringKey), schema[stringKey]);
-        if (!foundItem) {
-          found = false;
-        }
         return object.set(stringKey, item);
       } else {
-        const [, foundItem] = unvisit(undefined, schema[stringKey]);
-        if (!foundItem) {
-          found = false;
-        }
         return object;
       }
     }, input),
