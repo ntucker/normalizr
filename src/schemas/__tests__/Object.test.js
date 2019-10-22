@@ -55,6 +55,29 @@ describe(`${schema.Object.name} denormalization`, () => {
     expect(denormalize(fromJS({ user: 1 }), object, fromJS(entities))).toMatchSnapshot();
   });
 
+  test('should have found = true with null member even when schema has nested entity', () => {
+    const userSchema = new schema.Entity('user');
+    const object = {
+      item: new schema.Object({
+        user: userSchema
+      })
+    };
+    const entities = {
+      user: {
+        1: { id: 1, name: 'Nacho' }
+      }
+    };
+    let [value, found] = denormalize({ item: null }, object, entities);
+    expect(value).toMatchSnapshot();
+    expect(found).toBe(true);
+    [value, found] = denormalize({ item: null }, object, fromJS(entities));
+    expect(value).toMatchSnapshot();
+    expect(found).toBe(true);
+    [value, found] = denormalize(fromJS({ item: null }), object, fromJS(entities));
+    expect(value).toMatchSnapshot();
+    expect(found).toBe(true);
+  });
+
   test('denormalizes plain object shorthand', () => {
     const userSchema = new schema.Entity('user');
     const entities = {

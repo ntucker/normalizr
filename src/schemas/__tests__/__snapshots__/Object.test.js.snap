@@ -183,6 +183,24 @@ Array [
 ]
 `;
 
+exports[`ObjectSchema denormalization should have found = true with null member even when schema has nested entity 1`] = `
+Object {
+  "item": null,
+}
+`;
+
+exports[`ObjectSchema denormalization should have found = true with null member even when schema has nested entity 2`] = `
+Object {
+  "item": null,
+}
+`;
+
+exports[`ObjectSchema denormalization should have found = true with null member even when schema has nested entity 3`] = `
+Immutable.Map {
+  "item": null,
+}
+`;
+
 exports[`ObjectSchema normalization filters out undefined and null values 1`] = `
 Object {
   "entities": Object {
