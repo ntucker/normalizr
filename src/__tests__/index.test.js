@@ -219,10 +219,7 @@ describe('denormalize', () => {
         1: { id: 1, type: 'foo' }
       }
     };
-    expect(denormalize([{ data: 1 }, { data: 2 }], [{ data: mySchema }], {})[0]).toEqual([
-      { data: undefined },
-      { data: undefined }
-    ]);
+    expect(denormalize([{ data: 1 }, { data: 2 }], [{ data: mySchema }], {})[0]).toEqual([]);
     expect(denormalize([{ data: 1 }, { data: 2 }], [{ data: mySchema }], entities)[0]).toMatchSnapshot();
   });
 

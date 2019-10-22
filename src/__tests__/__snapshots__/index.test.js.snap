@@ -8,9 +8,6 @@ Array [
       "type": "foo",
     },
   },
-  Object {
-    "data": undefined,
-  },
 ]
 `;
 
@@ -35,7 +32,7 @@ Array [
       "type": "foo",
     },
   ],
-  false,
+  true,
 ]
 `;
 
@@ -49,7 +46,7 @@ Array [
       },
     ],
   },
-  false,
+  true,
 ]
 `;
 
@@ -130,11 +127,7 @@ exports[`denormalize set to undefined if schema key is not in entities 1`] = `
 Array [
   Object {
     "author": undefined,
-    "comments": Array [
-      Object {
-        "user": undefined,
-      },
-    ],
+    "comments": Array [],
     "id": "123",
   },
   false,
