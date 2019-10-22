@@ -121,7 +121,7 @@ describe(`${schema.Array.name} denormalization`, () => {
       ).toMatchSnapshot();
     });
 
-    test('denormalizes plain arrays with plain inside', () => {
+    test('denormalizes plain arrays with plain object inside', () => {
       const userSchema = new schema.Entity('user');
       const entities = {
         user: {
@@ -265,7 +265,7 @@ describe(`${schema.Array.name} denormalization`, () => {
       ).toMatchSnapshot();
     });
 
-    test('denormalizes plain arrays with plain inside', () => {
+    test('denormalizes plain arrays with plain object inside', () => {
       const userSchema = new schema.Entity('user');
       const entities = {
         user: {

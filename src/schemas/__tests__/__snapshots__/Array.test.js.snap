@@ -219,7 +219,7 @@ Array [
 ]
 `;
 
-exports[`ArraySchema denormalization Class denormalizes plain arrays with plain inside 1`] = `
+exports[`ArraySchema denormalization Class denormalizes plain arrays with plain object inside 1`] = `
 Array [
   Object {
     "user": Object {
@@ -231,7 +231,7 @@ Array [
 ]
 `;
 
-exports[`ArraySchema denormalization Class denormalizes plain arrays with plain inside 2`] = `
+exports[`ArraySchema denormalization Class denormalizes plain arrays with plain object inside 2`] = `
 Array [
   Object {
     "user": Immutable.Map {
@@ -243,7 +243,7 @@ Array [
 ]
 `;
 
-exports[`ArraySchema denormalization Class denormalizes plain arrays with plain inside 3`] = `
+exports[`ArraySchema denormalization Class denormalizes plain arrays with plain object inside 3`] = `
 Array [
   Immutable.Map {
     "user": Immutable.Map {
@@ -255,7 +255,7 @@ Array [
 ]
 `;
 
-exports[`ArraySchema denormalization Class denormalizes plain arrays with plain inside 4`] = `
+exports[`ArraySchema denormalization Class denormalizes plain arrays with plain object inside 4`] = `
 Array [
   Object {
     "tacos": Array [],
@@ -268,7 +268,7 @@ Array [
 ]
 `;
 
-exports[`ArraySchema denormalization Class denormalizes plain arrays with plain inside 5`] = `
+exports[`ArraySchema denormalization Class denormalizes plain arrays with plain object inside 5`] = `
 Array [
   Object {
     "tacos": Array [],
@@ -281,7 +281,7 @@ Array [
 ]
 `;
 
-exports[`ArraySchema denormalization Class denormalizes plain arrays with plain inside 6`] = `
+exports[`ArraySchema denormalization Class denormalizes plain arrays with plain object inside 6`] = `
 Array [
   Immutable.Map {
     "user": Immutable.Map {
@@ -531,7 +531,7 @@ Array [
 ]
 `;
 
-exports[`ArraySchema denormalization Object denormalizes plain arrays with plain inside 1`] = `
+exports[`ArraySchema denormalization Object denormalizes plain arrays with plain object inside 1`] = `
 Array [
   Object {
     "user": Object {
@@ -543,7 +543,7 @@ Array [
 ]
 `;
 
-exports[`ArraySchema denormalization Object denormalizes plain arrays with plain inside 2`] = `
+exports[`ArraySchema denormalization Object denormalizes plain arrays with plain object inside 2`] = `
 Array [
   Object {
     "user": Immutable.Map {
@@ -555,7 +555,7 @@ Array [
 ]
 `;
 
-exports[`ArraySchema denormalization Object denormalizes plain arrays with plain inside 3`] = `
+exports[`ArraySchema denormalization Object denormalizes plain arrays with plain object inside 3`] = `
 Array [
   Immutable.Map {
     "user": Immutable.Map {
@@ -567,7 +567,7 @@ Array [
 ]
 `;
 
-exports[`ArraySchema denormalization Object denormalizes plain arrays with plain inside 4`] = `
+exports[`ArraySchema denormalization Object denormalizes plain arrays with plain object inside 4`] = `
 Array [
   Object {
     "tacos": Array [],
@@ -580,7 +580,7 @@ Array [
 ]
 `;
 
-exports[`ArraySchema denormalization Object denormalizes plain arrays with plain inside 5`] = `
+exports[`ArraySchema denormalization Object denormalizes plain arrays with plain object inside 5`] = `
 Array [
   Object {
     "tacos": Array [],
@@ -593,7 +593,7 @@ Array [
 ]
 `;
 
-exports[`ArraySchema denormalization Object denormalizes plain arrays with plain inside 6`] = `
+exports[`ArraySchema denormalization Object denormalizes plain arrays with plain object inside 6`] = `
 Array [
   Immutable.Map {
     "user": Immutable.Map {
