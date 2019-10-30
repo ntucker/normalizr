@@ -45,7 +45,7 @@
     "test:ci": "jest --ci",
     "test:coverage": "npm run test -- --coverage && cat ./coverage/lcov.info | coveralls",
     "tsc:ci": "tsc --noEmit typescript-tests/*",
-    "typecheck": "run-p flow:ci tsc:ci"
+    "typecheck": "run-p tsc:ci"
   },
   "author": "Nathaniel Tucker",
   "contributors": [
@@ -83,7 +83,7 @@
     "rollup-plugin-filesize": "^6.1.1",
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-terser": "^5.0.0",
-    "typescript": "^3.4.5"
+    "typescript": "^3.6.4"
   },
   "dependencies": {
     "@babel/runtime": "^7.6.0"
