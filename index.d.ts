@@ -1,66 +1,278 @@
 declare namespace schema {
   export type StrategyFunction<T> = (value: any, parent: any, key: string) => T;
-  export type SchemaFunction = (value: any, parent: any, key: string) => string;
+  export type SchemaFunction<K = string> = (value: any, parent: any, key: string) => K;
   export type MergeFunction = (entityA: any, entityB: any) => any;
+  export type SchemaAttributeFunction<S extends Schema> = (value: any, parent: any, key: string) => S;
+  export type EntityMap<T = any> = { [key: string]: Entity<T> };
+  export type UnvisitFunction = (input: any, schema: any) => [any, boolean];
+  export type UnionResult<Choices extends EntityMap> = {
+    id: ReturnType<Choices[keyof Choices]['getId']>;
+    schema: keyof Choices;
+  };
 
-  export class Array<T = any> {
-    constructor(definition: Schema<T>, schemaAttribute?: string | SchemaFunction);
-    define(definition: Schema): void;
+  export interface SchemaClass {
+    normalize(
+      input: any,
+      parent: any,
+      key: any,
+      visit: Function,
+      addEntity: Function,
+      visitedEntities: { [key: string]: any }
+    ): NormalizedSchema<any, any>;
+    // this is not an actual member, but is needed for the recursive NormalizeNullable<> type algo
+    _normalizeNullable(
+      input: any,
+      parent: any,
+      key: any,
+      visit: Function,
+      addEntity: Function,
+      visitedEntities: { [key: string]: any }
+    ): NormalizedSchema<any, any>;
+    denormalize(input: any, unvisit: UnvisitFunction): [any, boolean];
+    // this is not an actual member, but is needed for the recursive DenormalizeNullable<> type algo
+    _denormalizeNullable(input: any, unvisit: UnvisitFunction): [any, boolean];
   }
 
-  export interface EntityOptions<T = any> {
-    idAttribute?: string | SchemaFunction;
+  export class Array<S extends Schema = Schema> implements SchemaClass {
+    constructor(definition: S, schemaAttribute?: string | SchemaFunction);
+    define(definition: Schema): void;
+    readonly schema: S;
+    normalize(
+      input: any,
+      parent: any,
+      key: any,
+      visit: Function,
+      addEntity: Function,
+      visitedEntities: { [key: string]: any }
+    ): NormalizedSchema<any, Normalize<S>[]>;
+    _normalizeNullable(
+      input: any,
+      parent: any,
+      key: any,
+      visit: Function,
+      addEntity: Function,
+      visitedEntities: { [key: string]: any }
+    ): NormalizedSchema<any, Normalize<S>[] | undefined>;
+    denormalize(input: any, unvisit: UnvisitFunction): [Denormalize<S>[], boolean];
+    _denormalizeNullable(input: any, unvisit: UnvisitFunction): [Denormalize<S>[] | undefined, false];
+  }
+
+  export interface EntityOptions<T = any, ID = string> {
+    idAttribute?: string | SchemaFunction<ID>;
     mergeStrategy?: MergeFunction;
     processStrategy?: StrategyFunction<T>;
   }
 
-  export class Entity<T = any> {
-    constructor(key: string | symbol, definition?: Schema, options?: EntityOptions<T>);
+  export class Entity<T = any, K extends string | symbol = string> implements SchemaClass {
+    constructor(key: K, definition?: Schema, options?: EntityOptions<T, string>);
     define(definition: Schema): void;
-    key: string;
+    readonly key: K;
     getId: SchemaFunction;
     _processStrategy: StrategyFunction<T>;
+    normalize(
+      input: any,
+      parent: any,
+      key: any,
+      visit: Function,
+      addEntity: Function,
+      visitedEntities: { [key: string]: any }
+    ): NormalizedSchema<any, string>; // string is the ReturnType of 'getId'
+    _normalizeNullable(
+      input: any,
+      parent: any,
+      key: any,
+      visit: Function,
+      addEntity: Function,
+      visitedEntities: { [key: string]: any }
+    ): NormalizedSchema<any, string | undefined>; // string is the ReturnType of 'getId'
+    denormalize(input: any, unvisit: UnvisitFunction): [T, boolean];
+    _denormalizeNullable(input: any, unvisit: UnvisitFunction): [T | undefined, boolean];
   }
 
-  export class Object<T = any> {
-    constructor(definition: { [key: string]: Schema<T> });
+  export class Object<O extends { [key: string]: any } = { [key: string]: Schema }> implements SchemaClass {
+    constructor(definition: O);
     define(definition: Schema): void;
+    readonly schema: O;
+    normalize(
+      input: any,
+      parent: any,
+      key: any,
+      visit: Function,
+      addEntity: Function,
+      visitedEntities: { [key: string]: any }
+    ): NormalizedSchema<any, NormalizeObject<O>>;
+    _normalizeNullable(
+      input: any,
+      parent: any,
+      key: any,
+      visit: Function,
+      addEntity: Function,
+      visitedEntities: { [key: string]: any }
+    ): NormalizedSchema<any, NormalizedNullableObject<O>>;
+    denormalize(input: any, unvisit: UnvisitFunction): [DenormalizeObject<O>, boolean];
+    _denormalizeNullable(input: any, unvisit: UnvisitFunction): [DenormalizeNullableObject<O>, false];
   }
 
-  export class Union<T = any> {
-    constructor(definition: Schema<T>, schemaAttribute?: string | SchemaFunction);
+  export class Union<Choices extends EntityMap = any> implements SchemaClass {
+    constructor(
+      definition: Choices,
+      schemaAttribute:
+        | (Choices[keyof Choices] extends Entity<infer T> ? keyof T : never)
+        | SchemaFunction<keyof Choices>
+    );
     define(definition: Schema): void;
+    inferSchema: SchemaAttributeFunction<Choices[keyof Choices]>;
+    getSchemaAttribute: SchemaFunction<keyof Choices>;
+    readonly schema: Choices;
+    normalize(
+      input: any,
+      parent: any,
+      key: any,
+      visit: Function,
+      addEntity: Function,
+      visitedEntities: { [key: string]: any }
+    ): NormalizedSchema<any, UnionResult<Choices>>;
+    _normalizeNullable(
+      input: any,
+      parent: any,
+      key: any,
+      visit: Function,
+      addEntity: Function,
+      visitedEntities: { [key: string]: any }
+    ): NormalizedSchema<any, UnionResult<Choices> | undefined>;
+    denormalize(
+      input: any,
+      unvisit: UnvisitFunction
+    ): [Choices[keyof Choices] extends Entity<infer T> ? T : never, boolean];
+    _denormalizeNullable(
+      input: any,
+      unvisit: UnvisitFunction
+    ): [Choices[keyof Choices] extends Entity<infer T> ? T | undefined : never, false];
   }
 
-  export class Values<T = any> {
-    constructor(definition: Schema<T>, schemaAttribute?: string | SchemaFunction);
+  export class Values<Choices extends Schema = any> implements SchemaClass {
+    constructor(
+      definition: Choices,
+      schemaAttribute?: Choices extends EntityMap<infer T> ? keyof T | SchemaFunction<keyof Choices> : undefined
+    );
     define(definition: Schema): void;
+    readonly isSingleSchema: Choices extends EntityMap ? false : true;
+    inferSchema: SchemaAttributeFunction<Choices extends EntityMap ? Choices[keyof Choices] : Choices>;
+    getSchemaAttribute: Choices extends EntityMap ? SchemaFunction<keyof Choices> : false;
+    readonly schema: Choices;
+    normalize(
+      input: any,
+      parent: any,
+      key: any,
+      visit: Function,
+      addEntity: Function,
+      visitedEntities: { [key: string]: any }
+    ): NormalizedSchema<any, Record<string, Choices extends EntityMap ? UnionResult<Choices> : Normalize<Choices>>>;
+    _normalizeNullable(
+      input: any,
+      parent: any,
+      key: any,
+      visit: Function,
+      addEntity: Function,
+      visitedEntities: { [key: string]: any }
+    ): NormalizedSchema<
+      any,
+      Record<string, Choices extends EntityMap ? UnionResult<Choices> : NormalizeNullable<Choices>> | undefined
+    >;
+    denormalize(
+      input: any,
+      unvisit: UnvisitFunction
+    ): [Record<string, Choices extends EntityMap<infer T> ? T : Denormalize<Choices>>, boolean];
+    _denormalizeNullable(
+      input: any,
+      unvisit: UnvisitFunction
+    ): [Record<string, Choices extends EntityMap<infer T> ? T | undefined : DenormalizeNullable<Choices>>, false];
   }
 }
 
-interface SimpleObject {
-  [key: string]: SimpleObject | string | number | boolean | void;
-}
+type DenormalizeObject<S extends { [key: string]: any }> = {
+  [K in keyof S]: S[K] extends Schema ? Denormalize<S[K]> : S[K];
+};
 
-export type Schema<T = any> =
-  | schema.Entity<T>
-  | schema.Object<T>
-  | schema.Union<T>
-  | schema.Values<T>
-  | SchemaObject<T>
-  | SchemaArray<T>;
+type DenormalizeNullableObject<S extends { [key: string]: any }> = {
+  [K in keyof S]: S[K] extends Schema ? DenormalizeNullable<S[K]> : S[K];
+};
 
-export interface SchemaObject<T> {
-  [key: string]: Schema<T> | string | number | boolean | void | SimpleObject;
-}
+type NormalizeObject<S extends { [key: string]: any }> = {
+  [K in keyof S]: S[K] extends Schema ? Normalize<S[K]> : S[K];
+};
 
-export interface SchemaArray<T> extends Array<Schema<T>> {}
+type NormalizedNullableObject<S extends { [key: string]: any }> = {
+  [K in keyof S]: S[K] extends Schema ? NormalizeNullable<S[K]> : S[K];
+};
+
+export type DenormalizeReturnType<T> = T extends (input: any, unvisit: any) => [infer R, any] ? R : never;
+export type NormalizeReturnType<T> = T extends (...args: any) => NormalizedSchema<any, infer R> ? R : never;
+
+// interfaces prevent infinite recursion since they eval lazily
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+interface DenormalizeA<F> extends Array<Denormalize<F>> {}
+
+export type Denormalize<S> = S extends schema.SchemaClass
+  ? DenormalizeReturnType<S['denormalize']>
+  : S extends Array<infer F>
+  ? DenormalizeA<F>
+  : S extends { [K: string]: any }
+  ? DenormalizeObject<S>
+  : S;
+
+// interfaces prevent infinite recursion since they eval lazily
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+interface DenormalizeNullableA<F> extends Array<DenormalizeNullable<F>> {}
+
+export type DenormalizeNullable<S> = S extends schema.SchemaClass
+  ? DenormalizeReturnType<S['_denormalizeNullable']>
+  : S extends Array<infer F>
+  ? DenormalizeA<F> | undefined
+  : S extends { [K: string]: any }
+  ? DenormalizeNullableObject<S>
+  : S;
+
+// interfaces prevent infinite recursion since they eval lazily
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+interface NormalizeA<F> extends Array<Normalize<F>> {}
+
+export type Normalize<S> = S extends schema.SchemaClass
+  ? NormalizeReturnType<S['normalize']>
+  : S extends Array<infer F>
+  ? NormalizeA<F>
+  : S extends { [K: string]: any }
+  ? NormalizeObject<S>
+  : S;
+
+// interfaces prevent infinite recursion since they eval lazily
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+interface NormalizeNullableA<F> extends Array<NormalizeNullable<F>> {}
+
+export type NormalizeNullable<S> = S extends schema.SchemaClass
+  ? NormalizeReturnType<S['_normalizeNullable']>
+  : S extends Array<infer F>
+  ? NormalizeA<F> | undefined
+  : S extends { [K: string]: any }
+  ? NormalizedNullableObject<S>
+  : S;
+
+// interfaces prevent infinite recursion since they eval lazily
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+interface SchemaArray extends Array<Schema> {}
+
+export type Schema = { [K: string]: any } | SchemaArray | schema.SchemaClass;
 
 export type NormalizedSchema<E, R> = { entities: E; result: R };
 
-export function normalize<T = any, E = { [key: string]: { [key: string]: T } }, R = any>(
-  data: any,
-  schema: Schema<T>
-): NormalizedSchema<E, R>;
+export function normalize<
+  S extends Schema = Schema,
+  E extends { [key: string]: { [key: string]: any } } = { [key: string]: { [key: string]: any } },
+  R = NormalizeNullable<S>
+>(data: any, schema: S): NormalizedSchema<E, R>;
 
-export function denormalize(input: any, schema: Schema, entities: any): [any, boolean];
+export function denormalize<S extends Schema>(
+  input: any,
+  schema: S,
+  entities: any
+): [Denormalize<S>, true] | [DenormalizeNullable<S>, false];
