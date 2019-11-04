@@ -53,6 +53,13 @@
     "Dan Abramov"
   ],
   "license": "MIT",
+  "browserslist": [
+    "> 1%",
+    "Firefox ESR",
+    "not dead",
+    "not ie<12",
+    "not OperaMini all"
+  ],
   "devDependencies": {
     "@anansi/babel-preset": "^0.18.3",
     "@babel/core": "^7.0.0",
