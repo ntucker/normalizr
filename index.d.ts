@@ -211,48 +211,40 @@ export type NormalizeReturnType<T> = T extends (...args: any) => NormalizedSchem
 
 // interfaces prevent infinite recursion since they eval lazily
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
-interface DenormalizeA<F> extends Array<Denormalize<F>> {}
+interface ArrayDenorm<F> extends Array<Denormalize<F>> {}
 
 export type Denormalize<S> = S extends schema.SchemaClass
   ? DenormalizeReturnType<S['denormalize']>
   : S extends Array<infer F>
-  ? DenormalizeA<F>
+  ? ArrayDenorm<F>
   : S extends { [K: string]: any }
   ? DenormalizeObject<S>
   : S;
 
-// interfaces prevent infinite recursion since they eval lazily
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-interface DenormalizeNullableA<F> extends Array<DenormalizeNullable<F>> {}
-
 export type DenormalizeNullable<S> = S extends schema.SchemaClass
   ? DenormalizeReturnType<S['_denormalizeNullable']>
   : S extends Array<infer F>
-  ? DenormalizeA<F> | undefined
+  ? ArrayDenorm<F> | undefined
   : S extends { [K: string]: any }
   ? DenormalizeNullableObject<S>
   : S;
 
 // interfaces prevent infinite recursion since they eval lazily
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
-interface NormalizeA<F> extends Array<Normalize<F>> {}
+interface ArrayNorm<F> extends Array<Normalize<F>> {}
 
 export type Normalize<S> = S extends schema.SchemaClass
   ? NormalizeReturnType<S['normalize']>
   : S extends Array<infer F>
-  ? NormalizeA<F>
+  ? ArrayNorm<F>
   : S extends { [K: string]: any }
   ? NormalizeObject<S>
   : S;
 
-// interfaces prevent infinite recursion since they eval lazily
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-interface NormalizeNullableA<F> extends Array<NormalizeNullable<F>> {}
-
 export type NormalizeNullable<S> = S extends schema.SchemaClass
   ? NormalizeReturnType<S['_normalizeNullable']>
   : S extends Array<infer F>
-  ? NormalizeA<F> | undefined
+  ? ArrayNorm<F> | undefined
   : S extends { [K: string]: any }
   ? NormalizedNullableObject<S>
   : S;
