@@ -20,7 +20,15 @@ describe('normalize', () => {
   test('normalizes entities', () => {
     const mySchema = new schema.Entity('tacos');
 
-    expect(normalize([{ id: 1, type: 'foo' }, { id: 2, type: 'bar' }], [mySchema])).toMatchSnapshot();
+    expect(
+      normalize(
+        [
+          { id: 1, type: 'foo' },
+          { id: 2, type: 'bar' }
+        ],
+        [mySchema]
+      )
+    ).toMatchSnapshot();
   });
 
   test('normalizes schema with extra members', () => {
@@ -28,7 +36,13 @@ describe('normalize', () => {
 
     expect(
       normalize(
-        { data: [{ id: 1, type: 'foo' }, { id: 2, type: 'bar' }], extra: 'five' },
+        {
+          data: [
+            { id: 1, type: 'foo' },
+            { id: 2, type: 'bar' }
+          ],
+          extra: 'five'
+        },
         { data: [mySchema], extra: '' }
       )
     ).toMatchSnapshot();

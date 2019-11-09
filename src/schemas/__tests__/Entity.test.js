@@ -55,7 +55,15 @@ describe(`${schema.Entity.name} normalization`, () => {
   describe('mergeStrategy', () => {
     test('defaults to plain merging', () => {
       const mySchema = new schema.Entity('tacos');
-      expect(normalize([{ id: 1, name: 'foo' }, { id: 1, name: 'bar', alias: 'bar' }], [mySchema])).toMatchSnapshot();
+      expect(
+        normalize(
+          [
+            { id: 1, name: 'foo' },
+            { id: 1, name: 'bar', alias: 'bar' }
+          ],
+          [mySchema]
+        )
+      ).toMatchSnapshot();
     });
 
     test('can use a custom merging strategy', () => {
@@ -64,7 +72,15 @@ describe(`${schema.Entity.name} normalization`, () => {
       };
       const mySchema = new schema.Entity('tacos', {}, { mergeStrategy });
 
-      expect(normalize([{ id: 1, name: 'foo' }, { id: 1, name: 'bar', alias: 'bar' }], [mySchema])).toMatchSnapshot();
+      expect(
+        normalize(
+          [
+            { id: 1, name: 'foo' },
+            { id: 1, name: 'bar', alias: 'bar' }
+          ],
+          [mySchema]
+        )
+      ).toMatchSnapshot();
     });
   });
 
